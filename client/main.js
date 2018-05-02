@@ -15,27 +15,11 @@ Tracker.autorun(() => {
   onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
-Tracker.autorun(() => {
-  const selectedNoteId = Session.get('selectedNoteId');
-  Session.set('isNavOpen', false);         
+Tracker.autorun(() => {    
   Meteor.subscribe('notes');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-  if (selectedNoteId && window.location.href == `http://localhost:3000/live/${selectedNoteId}`) {
-    browserHistory.replace(`/live/${selectedNoteId}`);
-  }
-  else if (selectedNoteId) {
-    browserHistory.replace(`/dashboard/${selectedNoteId}`);
-  }
 });
 
-Tracker.autorun(() => {
-  const isNavOpen = Session.get('isNavOpen');
-
-  document.body.classList.toggle('is-nav-open', isNavOpen);
-});
 
 Meteor.startup(() => {
-  Session.set('selectedNoteId', undefined);
-  Session.set('isNavOpen', false);
   ReactDOM.render(routes, document.getElementById('app'));
 });

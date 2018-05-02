@@ -9,14 +9,7 @@ import Live from '../ui/Live';
 import NotFound from '../ui/NotFound';
 import Login from '../ui/Login';
 
-const onEnterNotePage = (nextState) => {
-  const sample = window.location.href;
-  const partitionedUrl = sample.split('/');
-  Session.set('selectedNoteId', partitionedUrl[4]);
-};
-const onLeaveNotePage = () => {
-  Session.set('selectedNoteId', undefined);
-};
+
 export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
   const isUnauthenticatedPage = currentPagePrivacy === 'unauth';
   const isAuthenticatedPage = currentPagePrivacy === 'auth';
@@ -40,8 +33,8 @@ export const routes = (
       <Route path="/" component={Login} privacy="unauth"/>
       <Route path="/signup" component={Signup} privacy="unauth"/>
       <Route path="/dashboard" component={Dashboard} privacy="auth"/>
-      <Route path="/dashboard/:id" component={Dashboard} privacy="auth" onEnter={onEnterNotePage} onLeave={onLeaveNotePage}/>
-      <Route path="/live/:id" component={Live}  onEnter={onEnterNotePage} onLeave={onLeaveNotePage}/>
+      <Route path="/dashboard/:id" component={Dashboard} privacy="auth" />
+      <Route path="/live/:id" component={Live} />
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>

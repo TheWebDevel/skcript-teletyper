@@ -11,30 +11,53 @@ export class Editor extends React.Component {
     this.state = {
       title: '',
       body: '',
-      id : this.props.selectedNoteId
     };
   }
   handleBodyChange(e) {
     const body = e.target.value;
     this.setState({ body });
-    this.props.call('notes.update', this.props.note._id, { body });
+    clearInterval(this.timerID);
+    this.timerID = setInterval(
+      () => this.save(),
+      2000
+    );
   }
   handleTitleChange(e) {
     const title = e.target.value;
     this.setState({ title });
-    this.props.call('notes.update', this.props.note._id, { title });
+    clearInterval(this.timerID);
+    this.timerID = setInterval(
+      () => this.save(),
+      2000
+    );
   }
   handleRemoval(){
     this.props.call('notes.remove', this.props.note._id);
     this.props.browserHistory.push('/dashboard');
   }
 
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.save(),
+      2000
+    );
+  }
+
+  save() {
+    let body = this.state.body;
+    let title = this.state.title;
+    this.props.call('notes.update', this.props.note._id, { body });
+    this.props.call('notes.update', this.props.note._id, { body });
+  }
+
   componentWillReceiveProps(nextProps) {
-    let note = Notes.findOne(this.props.id);
-    this.setState({
+    const url = window.location.href;
+    const partitionedUrl = url.split('/');
+    let note = Notes.findOne(partitionedUrl[4]);
+    note ? this.setState({
       title : note.title,
       body : note.body
-    })
+    }) : null;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,6 +72,11 @@ export class Editor extends React.Component {
     }
     
   }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+  
   render() {
     if (this.props.note) {
       return (
@@ -83,8 +111,8 @@ Editor.propTypes = {
 };
 
 export default createContainer(() => {
-  const sample = window.location.href;
-  const partitionedUrl = sample.split('/');
+  const url = window.location.href;
+  const partitionedUrl = url.split('/');
   
   return {
     selectedNoteId : partitionedUrl[4],

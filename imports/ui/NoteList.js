@@ -10,8 +10,6 @@ import NoteListEmptyItem from './NoteListEmptyItem';
 export const NoteList = (props) => {
   return (
     <div className="item-list">
-    {console.log(props)
-    }
       <NoteListHeader id={props.id}/>
       { props.notes.length === 0 ? <NoteListEmptyItem/> : undefined }
       {props.notes.map((note) => {
