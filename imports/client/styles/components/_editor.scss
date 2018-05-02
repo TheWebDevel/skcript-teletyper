@@ -1,0 +1,35 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+.editor__title {
+  border: none;
+  border-bottom: 2px solid $grey;
+  font-size: $large-font-size;
+  margin-bottom: $large-space;
+  outline: none;
+  padding: $input-spacing;
+}
+
+.editor__body {
+   flex-grow: 1;
+   font-weight: 300;
+   margin-bottom: $large-space;
+   outline: none;
+   padding: $input-spacing;
+   resize: none;
+   -webkit-overflow-scrolling: touch;
+}
+
+.editor__message {
+  text-align: center;
+  margin: $large-space * 2;
+  font-style: italic;
+}
+
+.white-space-pre {
+  white-space: pre-wrap;
+}
