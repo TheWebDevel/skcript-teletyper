@@ -19,7 +19,7 @@ export class Editor extends React.Component {
     clearInterval(this.timerID);
     this.timerID = setInterval(
       () => this.save(),
-      2000
+      500
     );
   }
   handleTitleChange(e) {
@@ -28,7 +28,7 @@ export class Editor extends React.Component {
     clearInterval(this.timerID);
     this.timerID = setInterval(
       () => this.save(),
-      2000
+      500
     );
   }
   handleRemoval(){
@@ -37,17 +37,14 @@ export class Editor extends React.Component {
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.save(),
-      2000
-    );
+    this.timerID;
   }
 
   save() {
     let body = this.state.body;
     let title = this.state.title;
     this.props.call('notes.update', this.props.note._id, { body });
-    this.props.call('notes.update', this.props.note._id, { body });
+    this.props.call('notes.update', this.props.note._id, { title });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,7 +73,7 @@ export class Editor extends React.Component {
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
-  
+
   render() {
     if (this.props.note) {
       return (
